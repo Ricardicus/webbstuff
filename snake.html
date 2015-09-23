@@ -36,21 +36,29 @@ Your browser does not support the HTML5 canvas tag.</canvas>
 </div>
 </body>
 <script>
+
+// global variables telling the snake how to move
 var dr = 0;
 var dc = 0;
 
+// the game matrix
 var blocks = [];
 var timerId = 0;
 
+// the n in the nxn-matrix 'blocks' 
 var nbrofblocks = 32;
 
+// where to find the snake
 var snakeR = 0;
 var snakeC = 0;
 
+// points achieved!
 var points = 0;
 
+// globlad variable determining whether or not the game is lost
 var gmover = false;
 
+// game initialisation!
 function init(){
 
 	points = 0;
@@ -78,6 +86,7 @@ function init(){
 	go();
 }
 
+// the game loop!
 function go(){
 
 	timerId = window.setInterval(function(){
@@ -87,6 +96,7 @@ function go(){
 
 }
 
+// moving the snake
 function move(dr, dc){
 
 	var newR = (nbrofblocks + snakeR + dr)%nbrofblocks;
@@ -109,6 +119,7 @@ function move(dr, dc){
 
 }
 
+// placing food items on the screen (green dots)
 function placeFood(){
 	var tryR = Math.floor(Math.random()*(nbrofblocks))%nbrofblocks;
 	var tryC = Math.floor(Math.random()*(nbrofblocks))%nbrofblocks;
@@ -136,6 +147,7 @@ function placeFood(){
 	blocks[tryR][tryC] = -1;
 }
 
+// removing the end of the snake (crucial algorithm for making this game work)
 function removeTail(){
 
 	for(var x = 0; x<nbrofblocks;x++){
@@ -148,32 +160,34 @@ function removeTail(){
 	
 }
 
+// function called upon game lost.
 function gameover(){
 	alert("game over!!!!");
 	clearInterval(timerId);
 	gmover = true;
 }
 
+// handling the focus of the keylistener (solution found in thread on stackoverflow.com)
 var lastDownTarget, canvas;
 window.onload = function(e){
 	canvas = document.getElementById("tcanvas");
 
 	document.addEventListener('mousedown',function(event){
 		lastDownTarget = event.target;
-//		alert('mousedown');
 	},false);
 
 	document.addEventListener('keydown',function(event){
 		if(lastDownTarget == canvas){
-//			alert('keydown');
 			keypressed(event);
 		}
 	},false);
 	init();
 }
 
+// the timer identifier used for handling the restart calls.  
 var timerId = 0;
 
+// drawing the game on the canvas according to the content of the nxn-matrix 'blocks'
 function drawit(){
 
 	var ctx = canvas.getContext("2d");
@@ -203,6 +217,7 @@ function drawit(){
 
 }
 
+// key pressed handling
 function keypressed(event){
 
 	var y = event.keyCode;
@@ -219,6 +234,7 @@ function keypressed(event){
 
 }
 
+// Functions used to modify the snakes direction!
 function left(){
 	if(!(dr==0&&dc==1)){
 		dr = 0;
@@ -247,6 +263,7 @@ function down(){
 	}
 }
 
+// function called upon hitting the restart button after game lost
 function restart(){
 	if(gmover){
 		init();
