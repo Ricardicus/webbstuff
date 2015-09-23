@@ -230,35 +230,6 @@ function collisions(){
 	}
 }
 
-
-/*function spawnstuff(){
-	var y = nbrofblocks-1;
-	var spawn;
-	for(var x = 0;x<nbrofblocks;x++){
-		spawn = Math.floor(spawnrate()*Math.random());
-		if(spawn == 0 && blocks[x][y] !== REDDOT){
-			blocks[x][y] = GREENDOT;
-		}else if(blocks[x][y] !== REDDOT){
-			blocks[x][y] = EMPTY;
-		}
-	}
-}
-*/
-
-/*function spawnstuff(){
-	var y = nbrofblocks-1;
-	var spawn;
-	for(var x = 0;x<nbrofblocks;x++){
-		spawn = Math.floor(spawnrate()*Math.random());
-		if(spawn == 0 && blocks[x][y] !== REDDOT){
-			blocks[x][y] = GREENDOT;
-			blocks[(x+1)%nbrofblocks][y] = GREENDOT;
-		}else if(blocks[x][y] !== REDDOT){
-			blocks[x][y] = EMPTY;
-		}
-	}
-}*/
-
 //Used to generate the walls
 //making sure the red dots aren't overwritten once regenerated
 function spawnstuff(){
@@ -278,7 +249,7 @@ function spawnstuff(){
 
 }
 
-
+// function for moving the player around!
 function move(dr, dc){
 
 	playerR = (nbrofblocks + playerR + dr)%nbrofblocks;
@@ -294,8 +265,10 @@ function move(dr, dc){
 
 }
 
+// global timer identier
 var timerId = 0;
 
+// spawn a point item (red dot)
 function spawnred(){
 	var tryX;
 	var tryY = nbrofblocks-1;
@@ -309,6 +282,7 @@ function spawnred(){
 
 }
 
+// when it is over!
 function gameover(){
 	clearInterval(timerId);
 	gmover = true;
@@ -320,18 +294,17 @@ window.onload = function(e){
 
 	document.addEventListener('mousedown',function(event){
 		lastDownTarget = event.target;
-//		alert('mousedown');
 	},false);
 
 	document.addEventListener('keydown',function(event){
 		if(lastDownTarget == canvas){
-//			alert('keydown');
 			keypressed(event);
 		}
 	},false);
 	init();
 }
 
+// moving everything one step to the left
 function moveterrain(){
 	for(var x = 0;x<nbrofblocks;x++){
 		for(var y = 0;y<nbrofblocks;y++){
@@ -348,6 +321,7 @@ function moveterrain(){
 	}
 }
 
+// moving a specific item one step to the left
 function moveleft(x,y,outOfBounds){
 	if(y>0){
 		blocks[x][y-1] = blocks[x][y];
@@ -361,7 +335,7 @@ function moveleft(x,y,outOfBounds){
 
 }
 
-
+// drawing everything onto the canvas
 function drawit(){
 
 	var ctx = canvas.getContext("2d");
@@ -424,6 +398,8 @@ function keypressed(event){
   }
 }
 
+// Function for moving
+
 function up(){
 		move(-1,0);
 }
@@ -441,8 +417,7 @@ function right(){
 		move(0,1);
 }
 
-
-
+// restaring the game function can only be called after gmover = true (after a gameover call)
 function restart(){
 	if(gmover){
 		init();
