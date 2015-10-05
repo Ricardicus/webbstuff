@@ -89,7 +89,7 @@ function crypt(x){
 	var message = "";
 
 	for(h in x){
-		message+=selectedChars[(place[x[h]] + encodev[h % encodev.length])%selectedChars.length];
+		message+=selectedChars[(selectedChars.length*200 + place[x[h]] + encodev[h % encodev.length])%selectedChars.length];
 	}
 	document.getElementById("displaymsg").innerHTML = message
 }
