@@ -35,9 +35,9 @@
 		.msg{
 			letter-spacing: 3px;
 			position: absolute;
-			left: 30%;
+			left: 20%;
 			top:80%;
-			text-align: center
+			text-align:center;
 			color:"white";
 		}
 	</style>
@@ -89,7 +89,7 @@ function crypt(x){
 	var message = "";
 
 	for(h in x){
-		message+=selectedChars[(selectedChars.length*200 + place[x[h]] + encodev[h % encodev.length])%selectedChars.length];
+		message+=selectedChars[(selectedChars.length*200 + place[x[h]] + encodev[h % encodev.length])%selectedChars.length].replace( / /g, "&nbsp;" );
 	}
 	document.getElementById("displaymsg").innerHTML = message
 }
@@ -99,7 +99,7 @@ function decrypt(x){
 	var message = "";
 
 	for(h in x){
-		message+=selectedChars[(selectedChars.length*200 + place[x[h]] - encodev[h % encodev.length])%selectedChars.length];
+		message+=selectedChars[(selectedChars.length*200 + place[x[h]] - encodev[h % encodev.length])%selectedChars.length].replace( / /g, "&nbsp;" );
 	}
 	document.getElementById("displaymsg").innerHTML = message
 }
