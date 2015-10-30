@@ -1,2 +1,2 @@
 # snake
-bet you have played this before. Built in javascript and implemented in the HTML5 canvas.
+bet you have played this before. Implemented in the HTML5 canvas.
