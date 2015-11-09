@@ -5,7 +5,7 @@
 	</head>
 	<body>
 		<canvas id="canvas" width = "600" height = "600">Your browser does not support the type content that were to be displayed here.</canvas>
-		<h1>Choose where to shift the cube with the arrowkeys. Shift using 'n' and the 'm' key.</h1>
+		<h1>Choose where to shift the cube with the arrowkeys. Shift using 'n' and the 'm' key respectively.</h1>
 	</body>
 </html>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -172,9 +172,9 @@ function drawCube(){
 	}else if(3<=row_focus && row_focus<6){
 		ctxt.fillRect((startcol)*blockwidth-show_background/2,(startrow+14-row_focus)*blockheight-show_background/2,blockwidth*3,height/nbr_rows);
 	}else if(6<=row_focus && row_focus<9){
-		ctxt.fillRect((startcol)*blockwidth-show_background/2,(startrow-row_focus)*blockheight-show_background/2,blockwidth*3,height/nbr_rows);
+		ctxt.fillRect((startcol)*blockwidth-show_background/2,(startrow+8-row_focus)*blockheight-show_background/2,blockwidth*3,height/nbr_rows);
 	}else if(9<=row_focus && row_focus<12){
-		ctxt.fillRect((1)*blockwidth-show_background/2,(11+3-row_focus)*blockheight-show_background/2,blockwidth*3,blockheight);
+		ctxt.fillRect((startcol)*blockwidth-show_background/2,(startrow+11-row_focus)*blockheight-show_background/2,blockwidth*3,height/nbr_rows);
 	}
 	// for the left face
 	if(0<=row_focus && row_focus<3){
@@ -302,10 +302,113 @@ function rotateLeftSide(){
 }
 
 function rowShift(){
+	var shifter = [];
+	if(0<=row_focus && row_focus<3){
+		for(var i = 0;i<3;i++){
+			shifter.push(cube_fbud[row_focus][i]);
+		}
+		for(var i = 0;i<3;i++){
+			shifter.push(cube_r[i][2-(row_focus)]);
+		}
+		for(var i = 0;i<3;i++){
+			shifter.push(cube_fbud[8-row_focus][i]);
+		}
+		for(var i = 0;i<3;i++){
+			shifter.push(cube_l[i][row_focus]);
+		}
+		var n = 0;
+		for(var i = 0;i<3;i++){
+			cube_fbud[row_focus][2-i] = shifter[(9+n)%12];
+			n++;
+		}
+		for(var i = 0;i<3;i++){
+			cube_r[i][2-(row_focus)] = shifter[(9+n)%12];
+			n++;
+		}
+		for(var i = 0;i<3;i++){
+			cube_fbud[8-row_focus][2-i] = shifter[(9+n)%12];
+			n++;
+		}
+		for(var i = 0;i<3;i++){
+			cube_l[i][row_focus] = shifter[(9+n)%12];
+			n++;
+		}
+		if(row_focus == 0){
+			rotateBackSide();
+		}
+		if(row_focus == 2){
+			rotateFrontSide();
+		}
 
+	}else if(3<=row_focus && row_focus<6){
 
+	}else if(6<=row_focus && row_focus<9){
 
+	}else if(9<=row_focus && row_focus<12){
+
+	}
 }
+
+// rotating the front side, used in the function columnShift
+function rotateFrontSide(){
+	var shifter = [];
+	for(var i = 0;i<3;i++){
+		shifter.push(cube_fbud[3][i]);
+	}
+	for(var i = 1;i<3;i++){
+		shifter.push(cube_fbud[i][3]);
+	}
+	for(var i = 1;i>=0;i--){
+		shifter.push(cube_fbud[5][i]);
+	}
+	shifter.push(cube_fbud[4][0]);
+
+	var n = 0;
+	for(var i = 0;i<3;i++){
+		cube_fbud[3][i] = shifter[(n+2)%8];
+		n++;
+	}
+	for(var i = 1;i<3;i++){
+		cube_fbud[i][5] = shifter[(n+2)%8];
+		n++;
+	}
+	for(var i = 1;i>=0;i--){
+		cube_fbud[5][i] = shifter[(n+2)%8];
+		n++;
+	}
+	cube_fbud[4][0] = shifter[(n+2)%8];
+}
+
+// rotating the back side, used in the function rowShift
+function rotateBackSide(){
+	var shifter = [];
+	for(var i = 0;i<3;i++){
+		shifter.push(cube_fbud[9][i]);
+	}
+	for(var i = 1;i<3;i++){
+		shifter.push(cube_fbud[9+i][2]);
+	}
+	for(var i = 1;i>=0;i--){
+		shifter.push(cube_fbud[11][i]);
+	}
+	shifter.push(cube_fbud[10][0]);
+
+	var n = 0;
+	for(var i = 0;i<3;i++){
+		cube_fbud[9][i] = shifter[(n+2)%8];
+		n++;
+	}
+	for(var i = 1;i<3;i++){
+		cube_fbud[9+i][2] = shifter[(n+2)%8];
+		n++;
+	}
+	for(var i = 1;i>=0;i--){
+		cube_fbud[11][i] = shifter[(n+2)%8];
+		n++;
+	}
+	cube_fbud[10][0] = shifter[(n+2)%8];
+}
+
 
 // drawing a rounded rectangle
 function roundRect(ctx, x, y, width, height, fillstyle, radius) {
@@ -351,6 +454,9 @@ function keypressed(event){
   case 38:
     row_focus = (12+row_focus-1)%12;
     break;
+  case 77:
+  	rowShift();
+  	break;
   case 78:
   	columnShift();
   	break;
