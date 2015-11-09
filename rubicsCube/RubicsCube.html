@@ -356,7 +356,7 @@ function rotateFrontSide(){
 		shifter.push(cube_fbud[3][i]);
 	}
 	for(var i = 1;i<3;i++){
-		shifter.push(cube_fbud[i][3]);
+		shifter.push(cube_fbud[3+i][2]);
 	}
 	for(var i = 1;i>=0;i--){
 		shifter.push(cube_fbud[5][i]);
@@ -365,18 +365,18 @@ function rotateFrontSide(){
 
 	var n = 0;
 	for(var i = 0;i<3;i++){
-		cube_fbud[3][i] = shifter[(n+2)%8];
+		cube_fbud[3][i] = shifter[(6 + n)%8];
 		n++;
 	}
 	for(var i = 1;i<3;i++){
-		cube_fbud[i][5] = shifter[(n+2)%8];
+		cube_fbud[3+i][2] = shifter[(n+6)%8];
 		n++;
 	}
 	for(var i = 1;i>=0;i--){
-		cube_fbud[5][i] = shifter[(n+2)%8];
+		cube_fbud[5][i] = shifter[(n+6)%8];
 		n++;
 	}
-	cube_fbud[4][0] = shifter[(n+2)%8];
+	cube_fbud[4][0] = shifter[(n+6)%8];
 }
 
 // rotating the back side, used in the function rowShift
