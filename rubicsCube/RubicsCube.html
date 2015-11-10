@@ -341,12 +341,110 @@ function rowShift(){
 		}
 
 	}else if(3<=row_focus && row_focus<6){
+		var shifter = [];
+		for(var i = 0;i<3;i++){
+			shifter.push(cube_fbud[row_focus][i]);
+		}
+		for(var i = 0;i<3;i++){
+			shifter.push(cube_r[row_focus%3][i]);
+		}
+		for(var i = 0;i<3;i++){
+			shifter.push(cube_fbud[11-(row_focus%3)][i]);
+		}
+		for(var i = 0;i<3;i++){
+			shifter.push(cube_l[row_focus%3][i]);
+		}
+		n = 0;
+		for(var i = 0;i<3;i++){
+			cube_fbud[row_focus][i] = shifter[(n+9)%12];
+			n++;
+		}
+		for(var i = 0;i<3;i++){
+			cube_r[row_focus%3][i] = shifter[(n+9)%12];
+			n++;
+		}
+		for(var i = 2;i>=0;i--){
+			cube_fbud[11-(row_focus%3)][i] = shifter[(n+9)%12];
+			n++;
+		}
+		for(var i = 2;i>=0;i--){
+			cube_l[row_focus%3][i] = shifter[(n+9)%12];
+			n++;
+		}
+
+		if(row_focus == 3){
+			rotateUpSide();
+		}else if(row_focus == 5){
+			rotateDownSide();
+		}
 
 	}else if(6<=row_focus && row_focus<9){
 
 	}else if(9<=row_focus && row_focus<12){
 
 	}
+}
+
+// rotating the down side, used in the function rowShift;
+function rotateDownSide(){
+	var shifter = [];
+	for(var i = 0;i<3;i++){
+		shifter.push(cube_fbud[6][i]);
+	}
+	for(var i = 1;i<3;i++){
+		shifter.push(cube_fbud[6+i][2]);
+	}
+	for(var i = 1;i>=0;i--){
+		shifter.push(cube_fbud[8][i]);
+	}
+	shifter.push(cube_fbud[7][0]);
+
+	var n = 0;
+	for(var i = 0;i<3;i++){
+		cube_fbud[6][i] = shifter[(n+6)%8];
+		n++;
+	}
+	for(var i = 1;i<3;i++){
+		cube_fbud[6+i][2] = shifter[(n+6)%8];
+		n++;
+	}
+	for(var i = 1;i>=0;i--){
+		cube_fbud[8][i] = shifter[(n+6)%8];
+		n++;
+	}
+	cube_fbud[7][0] = shifter[(n+6)%8];
+}
+
+
+// rotating the up side, used in the function rowShift;
+function rotateUpSide(){
+	var shifter = [];
+	console.log("Hje")
+	for(var i = 0;i<3;i++){
+		shifter.push(cube_fbud[0][i]);
+	}
+	for(var i = 1;i<3;i++){
+		shifter.push(cube_fbud[i][2]);
+	}
+	for(var i = 1;i>=0;i--){
+		shifter.push(cube_fbud[2][i]);
+	}
+	shifter.push(cube_fbud[1][0]);
+
+	var n = 0;
+	for(var i = 0;i<3;i++){
+		cube_fbud[0][i] = shifter[(n+2)%8];
+		n++;
+	}
+	for(var i = 1;i<3;i++){
+		cube_fbud[i][2] = shifter[(n+2)%8];
+		n++;
+	}
+	for(var i = 1;i>=0;i--){
+		cube_fbud[2][i] = shifter[(n+2)%8];
+		n++;
+	}
+	cube_fbud[1][0] = shifter[(n+2)%8];
 }
 
 // rotating the front side, used in the function columnShift
