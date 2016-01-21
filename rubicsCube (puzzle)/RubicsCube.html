@@ -6,10 +6,11 @@
 	<body>
 		<canvas id="canvas" width = "600" height = "600">Your browser does not support the type content that were to be displayed here.</canvas>
 		<h1>Choose where to shift the cube with the arrowkeys. Shift using 'n' and the 'm' key respectively.</h1>
-	</body>
-</html>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script>
+		<button id="fix" style="position:absolute;left:15%">Just get it right already</button>
+		<br>
+		<button id="unfix" style="position:absolute;left:15%">Rerandomise it already</button>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script>
 
 // setting canvas focus and event listeners for key input handling 
 var lastDownTarget, canvas;
@@ -27,6 +28,50 @@ window.onload = function(e){
 	},false);
 	init();
 }
+
+$("#unfix").click(function(){
+	initiliseCube();
+});
+
+$("#fix").click(function(){
+	// making a vector with nine of each number in [1,6]
+	var values = [];
+	for(var i = 1;i<=6;i++){
+		for(var n = 0; n<9;n++){
+			values.push(i);
+		}
+	}
+
+	var count = 0;
+
+// pushing random values in [1,6] into the fron,back,up,down faces of the cube
+	for(var r = 0;r<12;r++){
+		for(var c = 0;c<3;c++){
+			cube_fbud[r][c] = values[count];
+			count++;
+		}
+	}
+
+// pushing random values in [1,6] into the left face of the cube
+	for(var r = 0;r<3;r++){
+		for(var c = 0;c<3;c++){
+			cube_l[r][c] = values[count];
+			count++;
+		}
+	}
+
+// pushing random values in [1,6] into the right face of the cube
+	for(var r = 0;r<3;r++){
+		for(var c = 0;c<3;c++){
+			cube_r[r][c] = values[count];
+			count++;
+		}
+	}
+
+	row_focus = 0;
+	column_focus = 0;
+
+});
 
 // global variables are declared
 // the canvas and its 2d-context reference is declared
@@ -144,7 +189,7 @@ function initiliseCube(){
 
 	row_focus = 0;
 	column_focus = 0;
-	
+
 }
 
 // contants
@@ -579,5 +624,6 @@ function keypressed(event){
     break;
   }
 }
-
-</script>
+	</script>
+	</body>
+</html>
