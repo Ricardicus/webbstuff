@@ -93,22 +93,20 @@ function initiliseCube(){
 
 // making a vector with nine of each number in [1,6]
 	var values = [];
-	var len = 0;
 	for(var i = 1;i<=6;i++){
 		for(var n = 0; n<9;n++){
 			values.push(i);
-			len++;
 		}
 	}
+
+	var count = 0;
 
 // pushing random values in [1,6] into the fron,back,up,down faces of the cube
 	for(var r = 0;r<12;r++){
 		cube_fbud.push([]);
 		for(var c = 0;c<3;c++){
-			var w = Math.floor(Math.random()*len);
-			cube_fbud[r].push(values[w]);
-			values.splice(w,1);
-			len--;
+			cube_fbud[r].push(values[count]);
+			count++;
 		}
 	}
 
@@ -116,10 +114,8 @@ function initiliseCube(){
 	for(var r = 0;r<3;r++){
 		cube_l.push([]);
 		for(var c = 0;c<3;c++){
-			var w = Math.floor(Math.random()*len);
-			cube_l[r].push(values[w]);
-			values.splice(w,1);
-			len--;
+			cube_l[r].push(values[count]);
+			count++;
 		}
 	}
 
@@ -127,12 +123,28 @@ function initiliseCube(){
 	for(var r = 0;r<3;r++){
 		cube_r.push([]);
 		for(var c = 0;c<3;c++){
-			var w = Math.floor(Math.random()*len);
-			cube_r[r].push(values[w]);
-			values.splice(w,1);
-			len--;
+			cube_r[r].push(values[count]);
+			count++;
 		}
 	}
+
+	var number_of_turns = 1000;
+	for(var i = 0; i<number_of_turns; i++){
+	 	switch(Math.floor(Math.random()*4)){
+	 		case 0:
+	 			row_focus = (row_focus+1)%3;
+	 		case 1:
+	 			column_focus = (column_focus+1)%3;
+	 		case 2:
+	 			columnShift();
+	 		case 3:
+	 			rowShift();
+	 	}
+	}
+
+	// row_focus = 0;
+	// column_focus = 0;
+
 	
 }
 
