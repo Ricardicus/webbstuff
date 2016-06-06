@@ -12,7 +12,7 @@ var animateTimerId;
 
 // Initilises global variables prepares the page for action!
 function init(){
-	selectedChars = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','å','ä','ö','A','B','C',' ','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','X','Y','W','Z','Å','Ä','Ö','.','"',"'",'0','1','2','3','4','5','6','7','8','9','-','?','#','!','@','/','&',')',':','(',';'];
+	selectedChars = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','å','ä','ö','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','X','Y','W','Z','Å','Ä','Ö','.','"',"'",'0','1','2','3','4','5','6','7','8','9','-','?','#','!','@','/','&',')',':','(',';', ' '];
 	encodev = [1,4,5,12,-13,14,14,10,9,11,18,97];
 	place = {};
 
@@ -29,6 +29,7 @@ function crypt(x){
 	var message = "";
 
 	for(h in x){
+		console.log("längd: " + selectedChars.length + " index: " + (selectedChars.length*200 + place[x[h]] + encodev[(200+h) % encodev.length])%selectedChars.length);
 		message+=selectedChars[(selectedChars.length*200 + place[x[h]] + encodev[h % encodev.length])%selectedChars.length].replace( / /g, "&nbsp;" );
 	}
 	document.getElementById("displaymsg").innerHTML = message
@@ -39,7 +40,7 @@ function decrypt(x){
 	var message = "";
 
 	for(h in x){
-		message+=selectedChars[(selectedChars.length*200 + place[x[h]] - encodev[h % encodev.length])%selectedChars.length].replace( / /g, "&nbsp;" );
+		message+=selectedChars[(selectedChars.length*200 + place[x[h]] - encodev[h % encodev.length])%selectedChars.length];
 	}
 	document.getElementById("displaymsg").innerHTML = message
 }
