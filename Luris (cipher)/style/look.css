@@ -14,6 +14,7 @@
 	border-width: 10px;
 	background-color: white;
 	opacity: 0.4;
+	resize: none;
 }
 
 .btn {
