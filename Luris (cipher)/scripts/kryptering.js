@@ -30,17 +30,11 @@ function crypt(x){
 
 	for(h in x){
 		if(place[x[h]] === undefined){
-			console.log("place do not contain: " + x[h]);
 			if(x[h] == "&nbsp;"){
-				console.log("den matchade mot sträng");
 			} else if(x[h] == ' '){
-				console.log("Den matchad mot mellanslag char");
 			} else if(x[h] == '&nbsp'){
-				console.log("Den matchad mot mellanslag nbsp");
 			}
 		}
-
-		console.log("längd: " + selectedChars.length + " index: " + (selectedChars.length*200 + place[x[h]] + encodev[(200+h) % encodev.length])%selectedChars.length);
 		message+=selectedChars[(selectedChars.length*200 + place[x[h]] + encodev[h % encodev.length])%selectedChars.length].replace( /&nbsp/g, ' ' );
 	}
 	document.getElementById("displaymsg").innerHTML = message
@@ -52,13 +46,9 @@ function decrypt(x){
 
 	for(h in x){
 		if(place[x[h]] === undefined){
-			console.log("place do not contain: " + x[h]);
 			if(x[h] == "&nbsp;"){
-				console.log("den matchade mot sträng");
 			} else if(x[h] == ' '){
-				console.log("Den matchad mot mellanslag char");
 			} else if(x[h] == '&nbsp'){
-				console.log("Den matchad mot mellanslag nbsp");
 			}
 		}
 		message+=selectedChars[(selectedChars.length*200 + place[x[h]] - encodev[h % encodev.length])%selectedChars.length].replace( /&nbsp/g, ' ' );
